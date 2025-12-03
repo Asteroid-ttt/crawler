@@ -1,0 +1,45 @@
+# 学院配置文件
+colleges:
+  # 电子信息学院 (现有)
+  eis:
+    name: "电子信息学院"
+    base_url: "http://eis.whu.edu.cn"
+    teacher_list_url: "http://eis.whu.edu.cn/index/goSzdw?flag=3&newskind_id=20160320222150685844oLXklVFf7H"
+    teacher_detail_pattern: "szdwDetail"
+    encoding: "utf-8"
+    parser_class: "EISTeacherCrawler"
+    
+  # 计算机学院
+  cs:
+    name: "计算机学院"
+    base_url: "https://cs.whu.edu.cn"
+    teacher_list_url: "https://cs.whu.edu.cn/szdw/zrjs.htm"
+    teacher_detail_pattern: "info/1019/"
+    encoding: "utf-8"
+    parser_class: "CSTeacherCrawler"
+    
+  # 遥感信息工程学院
+  rsgis:
+    name: "遥感信息工程学院"
+    base_url: "https://rsgis.whu.edu.cn"
+    teacher_list_url: "https://rsgis.whu.edu.cn/szdw4/zrjs.htm"
+    teacher_detail_pattern: "info/1004/"
+    encoding: "utf-8"
+    parser_class: "RSGISTeacherCrawler"
+    
+  # 数学与统计学院
+  maths:
+    name: "数学与统计学院"
+    base_url: "http://maths.whu.edu.cn"
+    teacher_list_url: "http://maths.whu.edu.cn/teachers"
+    teacher_detail_pattern: "teacher_info"
+    encoding: "utf-8"
+    parser_class: "MathsTeacherCrawler"
+
+# 全局配置
+global_config:
+  delay: 1  # 请求间隔秒数
+  timeout: 10  # 超时时间
+  retry_times: 3  # 重试次数
+  data_dir: "data"  # 数据根目录
+  log_level: "INFO"
