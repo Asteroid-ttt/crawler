@@ -26,6 +26,15 @@ colleges:
     teacher_detail_pattern: "info/1004/"
     encoding: "utf-8"
     parser_class: "RSGISTeacherCrawler"
+
+  # 测绘学院
+  sgg:
+    name: "测绘学院"
+    base_url: "https://www.sgg.whu.edu.cn"
+    teacher_list_url: "https://www.sgg.whu.edu.cn/szdw/dsmc2.htm"
+    teacher_detail_pattern: "info/"
+    encoding: "utf-8"
+    parser_class: "SGGTeacherCrawler"
     
   # 数学与统计学院
   maths:
@@ -35,6 +44,15 @@ colleges:
     teacher_detail_pattern: "teacher_info"
     encoding: "utf-8"
     parser_class: "MathsTeacherCrawler"
+
+  # 网络空间安全学院
+  cse:
+    name: "网络空间安全学院"
+    base_url: "https://cse.whu.edu.cn"
+    teacher_list_url: "https://cse.whu.edu.cn/szdw/jsml.htm"
+    teacher_detail_pattern: "info/"
+    encoding: "utf-8"
+    parser_class: "CSETeacherCrawler"
 
 # 全局配置
 global_config:

@@ -231,7 +231,12 @@ class BaseTeacherCrawler(ABC):
         for i, link in enumerate(teacher_links, 1):
             logger.info(f"处理第 {i}/{len(teacher_links)} 个教师")
             
-            teacher_info = self.parse_teacher_info(link)
+            # 兼容新的返回格式（字典）和旧格式（字符串）
+            if isinstance(link, dict):
+                teacher_info = self.parse_teacher_info(link)
+            else:
+                teacher_info = self.parse_teacher_info(link)
+            
             if teacher_info:
                 # 添加学院信息
                 teacher_info['college'] = self.config['name']

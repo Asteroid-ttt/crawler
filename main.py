@@ -1,7 +1,3 @@
-"""
-新版主程序
-使用重构后的架构，支持多学院爬取
-"""
 from crawler_manager import CrawlerManager
 import logging
 
@@ -11,10 +7,14 @@ logger = logging.getLogger(__name__)
 
 def main():
     """主函数"""
-    # 创建爬虫管理器
-    # 使用 YAML 配置文件
-    manager = CrawlerManager(config_path='config/colleges.yaml')
-    logger.info("使用YAML配置文件")
+    try:
+        # 创建爬虫管理器
+        # 使用 YAML 配置文件
+        manager = CrawlerManager(config_path='config/colleges.yaml')
+        logger.info("使用YAML配置文件")
+    except Exception as e:
+        logger.error(f"初始化爬虫管理器失败: {e}")
+        return
     
     # 显示可用学院
     available_colleges = manager.get_available_colleges()
@@ -28,17 +28,32 @@ def main():
     # merged_data = manager.crawl_and_merge()
     
     # 方式2: 爬取指定学院（推荐先测试单个学院）
-    target_colleges = ['rsgis']  # 运行遥感信息工程学院
+    target_colleges = ['cse']  # 运行网络空间安全学院
     print(f"目标学院: {[available_colleges.get(code, code) for code in target_colleges]}")
     
-    merged_data = manager.crawl_and_merge(college_list=target_colleges, save_individual=True)
+    # 单独爬取，不使用多线程避免KeyboardInterrupt问题
+    results = {}
+    for college_code in target_colleges:
+        try:
+            college_config = manager.config['colleges'][college_code]
+            result = manager.crawl_college(college_code, college_config)
+            results[college_code] = result
+            print(f"{college_config['name']} 爬取完成，获取 {len(result)} 条数据")
+        except Exception as e:
+            print(f"{college_code} 爬取失败: {e}")
+            results[college_code] = []
+    
+    # 统计总数据
+    total_data = []
+    for data_list in results.values():
+        total_data.extend(data_list)
     
     print(f"\n=== 爬取完成 ===")
-    print(f"总共获取 {len(merged_data)} 位教师信息")
+    print(f"总共获取 {len(total_data)} 条教师数据")
     print("数据已保存到 data 目录")
 
 
-def test_single_college(college_code, test_url):
+def test_single_college(college_code, test_url=None):
     """测试单个学院的爬虫
     Args:
         college_code (str): 学院代码
@@ -81,7 +96,7 @@ if __name__ == "__main__":
     main()
     
     # 取消注释以下行来运行测试
-    # test_single_college('eis', 'http://eis.whu.edu.cn/index/szdwDetail?rsh=00002318&newskind_id=20160320222150685844oLXklVFf7H')
+    # test_single_college('cse')
     
     # 取消注释以下行来查看添加新学院的示例
     # add_new_college_example()
