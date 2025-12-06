@@ -28,7 +28,7 @@ def main():
     # merged_data = manager.crawl_and_merge()
     
     # 方式2: 爬取指定学院（推荐先测试单个学院）
-    target_colleges = ['cse']  # 运行网络空间安全学院
+    target_colleges = ['eea']  # 运行电气与自动化学院
     print(f"目标学院: {[available_colleges.get(code, code) for code in target_colleges]}")
     
     # 单独爬取，不使用多线程避免KeyboardInterrupt问题
@@ -93,10 +93,10 @@ def add_new_college_example():
 
 if __name__ == "__main__":
     # 运行主程序
-    main()
+    # main()
     
     # 取消注释以下行来运行测试
-    # test_single_college('cse')
+    test_single_college('pmc', test_url='https://pmc.whu.edu.cn/info/1025/165021.htm')
     
     # 取消注释以下行来查看添加新学院的示例
     # add_new_college_example()

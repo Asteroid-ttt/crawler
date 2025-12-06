@@ -35,6 +35,8 @@ class CrawlerManager:
             'RSGISTeacherCrawler': 'crawlers.rsgis_crawler.RSGISTeacherCrawler',
             'SGGTeacherCrawler': 'crawlers.sgg_crawler.SGGTeacherCrawler',
             'CSETeacherCrawler': 'crawlers.cse_crawler.CSETeacherCrawler',
+            'PMCTeacherCrawler': 'crawlers.pmc_crawler.PMCTeacherCrawler',
+            'EEATeacherCrawler': 'crawlers.eea_crawler.EEATeacherCrawler',
             'JSZYTeacherCrawler': 'crawlers.jszy_crawler.JSZYTeacherCrawler',
             'MathsTeacherCrawler': 'crawlers.generic_crawler.MathsTeacherCrawler',
             'GenericTeacherCrawler': 'crawlers.generic_crawler.GenericTeacherCrawler'
@@ -452,7 +454,7 @@ def main():
         print(f"  {code}: {name}")
     
     # 选择要爬取的学院
-    target_colleges = ['cse']  # 可以修改为其他学院或None（爬取所有）
+    target_colleges = ['eea']  # 可以修改为其他学院或None（爬取所有）
     
     # 开始爬取
     print(f"\n开始爬取学院: {target_colleges}")

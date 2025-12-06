@@ -54,6 +54,24 @@ colleges:
     encoding: "utf-8"
     parser_class: "CSETeacherCrawler"
 
+  # 动力与机械学院
+  pmc:
+    name: "动力与机械学院"
+    base_url: "https://pmc.whu.edu.cn"
+    teacher_list_url: "https://pmc.whu.edu.cn/szdw/jsdw.htm"
+    teacher_detail_pattern: "info/"
+    encoding: "utf-8"
+    parser_class: "PMCTeacherCrawler"
+
+  # 电气与自动化学院
+  eea:
+    name: "电气与自动化学院"
+    base_url: "https://eea.whu.edu.cn"
+    teacher_list_url: "https://eea.whu.edu.cn/szdw/zrjs.htm"
+    teacher_detail_pattern: "info/|jszy"
+    encoding: "utf-8"
+    parser_class: "EEATeacherCrawler"
+
 # 全局配置
 global_config:
   delay: 1  # 请求间隔秒数
