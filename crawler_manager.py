@@ -37,6 +37,11 @@ class CrawlerManager:
             'CSETeacherCrawler': 'crawlers.cse_crawler.CSETeacherCrawler',
             'PMCTeacherCrawler': 'crawlers.pmc_crawler.PMCTeacherCrawler',
             'EEATeacherCrawler': 'crawlers.eea_crawler.EEATeacherCrawler',
+            'SWRHTeacherCrawler': 'crawlers.swrh_crawler.SWRHTeacherCrawler',
+            'SUDTeacherCrawler': 'crawlers.sud_crawler.SUDTeacherCrawler',
+            'RoboticsTeacherCrawler': 'crawlers.robotics_crawler.RoboticsTeacherCrawler',
+            'ICTeacherCrawler': 'crawlers.ic_crawler.ICTeacherCrawler',
+            'CIVTeacherCrawler': 'crawlers.civ_crawler.CIVTeacherCrawler',
             'JSZYTeacherCrawler': 'crawlers.jszy_crawler.JSZYTeacherCrawler',
             'MathsTeacherCrawler': 'crawlers.generic_crawler.MathsTeacherCrawler',
             'GenericTeacherCrawler': 'crawlers.generic_crawler.GenericTeacherCrawler'
@@ -454,7 +459,7 @@ def main():
         print(f"  {code}: {name}")
     
     # 选择要爬取的学院
-    target_colleges = ['eea']  # 可以修改为其他学院或None（爬取所有）
+    target_colleges = None  # 可以修改为其他学院或None（爬取所有）
     
     # 开始爬取
     print(f"\n开始爬取学院: {target_colleges}")

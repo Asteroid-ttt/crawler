@@ -36,15 +36,6 @@ colleges:
     encoding: "utf-8"
     parser_class: "SGGTeacherCrawler"
     
-  # 数学与统计学院
-  maths:
-    name: "数学与统计学院"
-    base_url: "http://maths.whu.edu.cn"
-    teacher_list_url: "http://maths.whu.edu.cn/teachers"
-    teacher_detail_pattern: "teacher_info"
-    encoding: "utf-8"
-    parser_class: "MathsTeacherCrawler"
-
   # 网络空间安全学院
   cse:
     name: "网络空间安全学院"
@@ -68,9 +59,53 @@ colleges:
     name: "电气与自动化学院"
     base_url: "https://eea.whu.edu.cn"
     teacher_list_url: "https://eea.whu.edu.cn/szdw/zrjs.htm"
-    teacher_detail_pattern: "info/|jszy"
+    teacher_detail_pattern: "info/"
     encoding: "utf-8"
     parser_class: "EEATeacherCrawler"
+
+  # 水利水电学院
+  swrh:
+    name: "水利水电学院"
+    base_url: "https://swrh.whu.edu.cn"
+    teacher_list_url: "https://swrh.whu.edu.cn/szdw/zhslx.htm"
+    teacher_detail_pattern: "info/"
+    encoding: "utf-8"
+    parser_class: "SWRHTeacherCrawler"
+
+  # 城市设计学院
+  sud:
+    name: "城市设计学院"
+    base_url: "https://sud.whu.edu.cn"
+    teacher_list_url: "https://sud.whu.edu.cn/szdw/jxtd/csghx/js.htm"
+    teacher_detail_pattern: "info/"
+    encoding: "utf-8"
+    parser_class: "SUDTeacherCrawler"
+
+  # 机器人学院
+  robotics:
+    name: "机器人学院"
+    base_url: "https://robotics.whu.edu.cn"
+    teacher_list_url: "https://robotics.whu.edu.cn/szdw/szdw.htm"
+    teacher_detail_pattern: "info/"
+    encoding: "utf-8"
+    parser_class: "RoboticsTeacherCrawler"
+
+  # 集成电路学院  
+  ic:
+    name: "集成电路学院"
+    base_url: "https://ic.whu.edu.cn"
+    teacher_list_url: "https://ic.whu.edu.cn/teacher/zzjs.htm"
+    teacher_detail_pattern: "info/"
+    encoding: "utf-8"
+    parser_class: "ICTeacherCrawler"
+    
+  civ:
+    name: "土木建筑工程学院"
+    base_url: "https://civ.whu.edu.cn"
+    teacher_list_url: "https://civ.whu.edu.cn/szdw/jsdw.htm"
+    teacher_detail_pattern: "info/"
+    encoding: "utf-8"
+    parser_class: "CIVTeacherCrawler"
 
 # 全局配置
 global_config:
