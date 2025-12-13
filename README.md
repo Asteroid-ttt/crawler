@@ -22,46 +22,65 @@ crawler/
 │   └── colleges.yaml      # 学院配置（YAML格式）
 ├── crawlers/               # 爬虫模块目录
 │   ├── __init__.py        # 包初始化文件
-│   ├── base_crawler.py    # 基础爬虫类
+│   ├── base_crawler.py    # 基础爬虫抽象类
+│   ├── generic_crawler.py # 通用爬虫实现
 │   ├── eis_crawler.py     # 电子信息学院爬虫
-│   └── generic_crawler.py # 通用学院爬虫
+│   ├── cs_crawler.py      # 计算机学院爬虫
+│   ├── jszy_crawler.py    # 教师主页系统爬虫
+│   └── ...                # 其他学院爬虫
 ├── data/                   # 数据存储目录
 │   ├── raw/               # 原始爬取数据
 │   ├── processed/         # 处理后的数据
 │   ├── colleges/          # 按学院分类的数据
-│   ├── reports/           # 统计报告
-│   └── backup/            # 备份数据
-├── crawler_manager.py      # 主控制器
-├── data_manager.py         # 数据管理器
-├── main.py                # 主程序，支持多学院爬取
-├── pyproject.toml         # 项目配置
+│   ├── reports/           # 统计与质量报告
+│   └── backup/            # 自动备份数据
+├── crawler_manager.py      # 主控制器与调度器
+├── data_manager.py         # 数据管理与持久化
+├── main.py                # 主程序入口
+├── pyproject.toml         # 项目依赖配置
 └── README.md              # 项目文档
 ```
 
 ## 快速开始
 
-### 1. 安装依赖
+### 1. 环境准备
 
-```bash
+**Python 版本要求**: Python 3.9+
+
+**安装依赖**:
+```powershell
+# 方式1: 使用 pyproject.toml（推荐）
 pip install -e .
-```
 
-或手动安装：
-```bash
+# 方式2: 手动安装
 pip install beautifulsoup4 requests pandas openpyxl pyyaml
 ```
 
 ### 2. 运行爬虫
 
-```bash
-# 使用新版主程序（推荐）
-python new_main.py
-
-# 或使用原版主程序（仅电子信息学院）
-python main.py
+```powershell
+# 运行主程序
+python .\main.py
 ```
 
-### 3. 查看结果
+**配置选择**:
+- 编辑 `main.py` 中的 `target_colleges` 变量选择要爬取的学院
+- 或修改为 `None` 爬取所有配置的学院
+
+### 3. 配置学院
+
+编辑 `config/colleges.yaml` 文件来配置要爬取的学院：
+
+```yaml
+colleges:
+  eis:
+    name: "电子信息学院"
+    base_url: "http://eis.whu.edu.cn"
+    teacher_list_url: "http://eis.whu.edu.cn/..."
+    parser_class: "EISTeacherCrawler"
+```
+
+### 4. 查看结果
 
 爬取结果将保存在 `data/` 目录下的不同子目录中：
 
@@ -81,18 +100,43 @@ python main.py
 
 ## 添加新学院
 
-### 方法1: 使用通用爬虫（推荐）
-
-1. 在配置文件中添加学院信息
-2. 设置 `parser_class` 为 `GenericTeacherCrawler`
-3. 配置页面结构选择器
-
-### 方法2: 创建专用爬虫
+### 方法1: 创建专用爬虫（推荐）
 
 1. 在 `crawlers/` 目录下创建新的爬虫文件
 2. 继承 `BaseTeacherCrawler` 类
 3. 实现必要的方法
 4. 在配置文件中指定新的爬虫类
+
+### 方法2: 使用通用爬虫
+
+1. 在配置文件中添加学院信息
+2. 设置 `parser_class` 为 `GenericTeacherCrawler`
+3. 配置页面结构选择器
+
+## 调试与测试
+
+### 测试单个学院
+
+```python
+from crawler_manager import CrawlerManager
+
+manager = CrawlerManager()
+
+# 测试学院配置
+result = manager.test_college_crawler('eis')
+print(result)
+
+# 测试特定教师页面
+result = manager.test_college_crawler('pmc', 'https://pmc.whu.edu.cn/info/1025/165021.htm')
+print(result)
+```
+
+### 从URL直接爬取
+
+```python
+# 自动检测并爬取任意教师页面
+data = manager.crawl_from_url('https://jszy.whu.edu.cn/...')
+```
 
 ## 使用示例
 
@@ -102,10 +146,28 @@ from crawler_manager import CrawlerManager
 # 创建管理器
 manager = CrawlerManager()
 
+# 查看可用学院
+colleges = manager.get_available_colleges()
+print("可用学院:", colleges)
+
 # 爬取指定学院
 target_colleges = ['eis', 'cs']  
 data = manager.crawl_and_merge(college_list=target_colleges)
+
+# 爬取所有学院
+all_data = manager.crawl_and_merge()
 ```
+
+## 常见问题
+
+**Q: 爬取失败怎么办？**
+A: 检查网络连接，查看 `config/colleges.yaml` 中的URL是否有效，或使用测试功能调试。
+
+**Q: 如何添加新学院？**
+A: 参考下面的"添加新学院"部分，或使用通用爬虫配置页面选择器。
+
+**Q: 数据保存在哪里？**
+A: 查看 `data/colleges/` 目录下的CSV和JSON文件，以及 `data/reports/` 下的统计报告。
 
 ## 许可证
 

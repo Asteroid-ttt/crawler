@@ -24,7 +24,7 @@ class TableMerger:
             data_dir (str): 学院数据目录
         """
         self.data_dir = Path(data_dir)
-        self.output_dir = Path('data/processed/merged')
+        self.output_dir = Path('./data/processed/merged')
         self.output_dir.mkdir(parents=True, exist_ok=True)
     
     def load_json_files(self):
